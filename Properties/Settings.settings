@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="mhcj.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="图片" Type="System.Drawing.Imaging.ImageFormat" Scope="Application">
+      <Value Profile="(Default)">Jpeg</Value>
+    </Setting>
+    <Setting Name="DKText" Type="System.String" Scope="User">
+      <Value Profile="(Default)">1.55</Value>
+    </Setting>
+    <Setting Name="RSText" Type="System.String" Scope="User">
+      <Value Profile="(Default)">5</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
