@@ -1,11 +1,8 @@
 [
-  {
-    "Category": "谛听",
-    "Price": 1050
-  },
+
   {
     "Category": "广目",
-    "Price": 1800
+    "Price": 1600
   },
   {
     "Category": "持国",
@@ -33,7 +30,7 @@
   },
   {
     "Category": "4J童子",
-    "Price": 130
+    "Price": 200
   },
   {
     "Category": "天女",

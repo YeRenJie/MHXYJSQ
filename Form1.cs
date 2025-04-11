@@ -75,8 +75,7 @@ namespace mhcj
             // 监听数据变动事件
             _profitItems.ListChanged += ProfitItems_ListChanged;
 
-            // 初始化显示
-            label4.Text = "收 益：0";
+       
             button1_Click(null, null);
         }
         // 数据变动事件处理
@@ -223,63 +222,53 @@ namespace mhcj
             // 保存到文件
             PriceManager.SavePrices(_priceList);
 
-            // 刷新现有收益记录中的价格
-            foreach (var item in _profitItems.Where(x => x.Category == selectedItem.Category))
-            {
-                item.Price = newPrice;
-            }
-            dataGridView1.Refresh();
-            button1_Click(null,null);
+            //// 刷新现有收益记录中的价格
+            //foreach (var item in _profitItems.Where(x => x.Category == selectedItem.Category))
+            //{
+            //    item.Price = newPrice;
+            //}
+            //dataGridView1.Refresh();
+            button1_Click(null, null);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            decimal total = _profitItems.Sum(item => item.ItemProfit);
-            label4.Text = $"收 益：{total}W";
+            decimal total = _profitItems.Sum(item =>
+            {
+                if (item.Category != "点卡")
+                    return item.ItemProfit;
+                else
+                    return 0;
+            });
+            decimal dkzje = _profitItems.Sum(item =>
+            {
+                if (item.Category == "点卡")
+                    return item.ItemProfit;
+                else
+                    return 0;
+            });
+            //统计当月
+            TJDY();
+            //统计今日
+            TJJR();
+            //统计本周
+            TJBZ();
+            //统计上月
+            TJSY();
+            //统计本年
+            TJBN();
+            //统计全部
+            TJ();
 
-            // 计算今日收益
-            decimal todayProfit = _profitItems
-                .Where(item => item.Time.Date == DateTime.Now.Date)
-                .Sum(item => item.ItemProfit);
-
-            // 计算最近一周收益
-            decimal lastWeekProfit = _profitItems
-                .Where(item => item.Time.Date >= DateTime.Now.Date.AddDays(-7))
-                .Sum(item => item.ItemProfit);
-
-            // 计算最近一月收益
-            decimal lastMonthProfit = _profitItems
-                .Where(item => item.Time.Date >= DateTime.Now.Date.AddDays(-30))
-                .Sum(item => item.ItemProfit);
-
-            // 计算最近一年收益
-            decimal lastYearProfit = _profitItems
-                .Where(item => item.Time.Date >= DateTime.Now.Date.AddDays(-365))
-                .Sum(item => item.ItemProfit);
-            // 计算最近一月收益
-            decimal monthProfit = _profitItems
- .Where(item => item.Category == "点卡" && item.Time.Date.Year == DateTime.Now.Date.Year && item.Time.Date.Month == DateTime.Now.Date.Month)
- .Sum(item => item.ItemProfit);
-            // 更新标签
-            label6.Text = $"今日：{todayProfit}W";
-            label7.Text = $"最近一周：{lastWeekProfit}W";
-            label8.Text = $"最近一月：{lastMonthProfit}W";
-            label9.Text = $"最近一年：{lastYearProfit}W";
-            var categoryCounts = _profitItems
-                                .Where(item => item.Category != "点卡" && item.Time.Date.Year == DateTime.Now.Date.Year && item.Time.Date.Month == DateTime.Now.Date.Month)
-  .GroupBy(item => item.Category)
-  .OrderByDescending(a => a.Key)
-  .ToDictionary(g => g.Key, g => g.Count());
-            //单价：{txtdk.Text} * 人数* 数量=消耗
-            
-
-            var dktotal = Math.Abs(monthProfit);
-            var dkxs = dktotal / (6 * decimal.Parse(txtdk.Text)*int.Parse(txtjs.Text));
-            lbldk.Text = $"{dkxs:N2} 小时";
-            label19.Text = $"{dktotal:N2} W";
+            //统计数量
             int zl = 0;
             label11.Text = $"";
             label13.Text = $"";
+            var categoryCounts = _profitItems
+.Where(item => item.Category != "点卡" && item.Time.Date.Year == DateTime.Now.Date.Year && item.Time.Date.Month == DateTime.Now.Date.Month)
+.GroupBy(item => item.Category)
+.OrderByDescending(a => a.Key)
+.ToDictionary(g => g.Key, g => g.Sum(item => item.Quantity));
             foreach (var item in categoryCounts)
             {
                 zl++;
@@ -305,6 +294,164 @@ namespace mhcj
             }
         }
 
+        private void TJDY()
+        {
+            // 计算最近一月收益
+            decimal monthProfit = _profitItems
+ .Where(item => item.Category == "点卡" && item.Time.Date.Year == DateTime.Now.Date.Year && item.Time.Date.Month == DateTime.Now.Date.Month)
+ .Sum(item => item.ItemProfit);
+
+            //单价：{txtdk.Text} * 人数* 数量=消耗
+
+            // 计算当月收益
+            decimal dysy = _profitItems
+                .Where(item => item.Category != "点卡" && item.Time.Date.Year == DateTime.Now.Date.Year && item.Time.Date.Month == DateTime.Now.Date.Month)
+                .Sum(item => item.ItemProfit);
+
+            var dktotal = Math.Abs(monthProfit);
+            var dkxs = dktotal / (6 * decimal.Parse(txtdk.Text) * int.Parse(txtjs.Text));
+            lbldyzx.Text = $"{dkxs:N0} 小时";
+            lbldydk.Text = $"{dktotal:N0} W / {dktotal / (decimal.Parse(txtdk.Text) * 10):N0}￥";
+            lbldysy.Text = $"{dysy:N0} W / {dysy / (decimal.Parse(txtdk.Text) * 10):N0}￥";
+            lbldylr.Text = $"{(dysy - dktotal):N0} W / {(dysy - dktotal) / (decimal.Parse(txtdk.Text) * 10):N0}￥";
+        }
+        //// 统计当月
+        //private void TJDY()
+        //{
+        //    DateTime now = DateTime.Now;
+        //    decimal dkProfit = _profitItems
+        //        .Where(item => item.Category == "点卡" &&
+        //              item.Time.Year == now.Year &&
+        //              item.Time.Month == now.Month)
+        //        .Sum(item => item.ItemProfit);
+
+        //    decimal otherProfit = _profitItems
+        //        .Where(item => item.Category != "点卡" &&
+        //              item.Time.Year == now.Year &&
+        //              item.Time.Month == now.Month)
+        //        .Sum(item => item.ItemProfit);
+
+        //    UpdateLabels(dkProfit, otherProfit, "dy");
+        //}
+
+        // 统计今日
+        private void TJJR()
+        {
+            DateTime today = DateTime.Today;
+            decimal dkProfit = _profitItems
+                .Where(item => item.Category == "点卡" &&
+                      item.Time.Date == today)
+                .Sum(item => item.ItemProfit);
+
+            decimal otherProfit = _profitItems
+                .Where(item => item.Category != "点卡" &&
+                      item.Time.Date == today)
+                .Sum(item => item.ItemProfit);
+
+            UpdateLabels(dkProfit, otherProfit, "dr");
+        }
+
+        // 统计本周
+        private void TJBZ()
+        {
+            DateTime today = DateTime.Today;
+            DateTime startOfWeek = today.AddDays(-(int)today.DayOfWeek);
+            DateTime endOfWeek = startOfWeek.AddDays(6);
+
+            decimal dkProfit = _profitItems
+                .Where(item => item.Category == "点卡" &&
+                      item.Time.Date >= startOfWeek &&
+                      item.Time.Date <= endOfWeek)
+                .Sum(item => item.ItemProfit);
+
+            decimal otherProfit = _profitItems
+                .Where(item => item.Category != "点卡" &&
+                      item.Time.Date >= startOfWeek &&
+                      item.Time.Date <= endOfWeek)
+                .Sum(item => item.ItemProfit);
+
+            UpdateLabels(dkProfit, otherProfit, "bz");
+        }
+
+        // 统计上月
+        private void TJSY()
+        {
+            DateTime now = DateTime.Now;
+            DateTime firstDayOfLastMonth = new DateTime(now.Year, now.Month, 1).AddMonths(-1);
+            DateTime lastDayOfLastMonth = firstDayOfLastMonth.AddMonths(1).AddDays(-1);
+
+            decimal dkProfit = _profitItems
+                .Where(item => item.Category == "点卡" &&
+                      item.Time.Date >= firstDayOfLastMonth &&
+                      item.Time.Date <= lastDayOfLastMonth)
+                .Sum(item => item.ItemProfit);
+
+            decimal otherProfit = _profitItems
+                .Where(item => item.Category != "点卡" &&
+                      item.Time.Date >= firstDayOfLastMonth &&
+                      item.Time.Date <= lastDayOfLastMonth)
+                .Sum(item => item.ItemProfit);
+
+            UpdateLabels(dkProfit, otherProfit, "sy");
+        }
+
+        // 统计本年
+        private void TJBN()
+        {
+            DateTime now = DateTime.Now;
+            decimal dkProfit = _profitItems
+                .Where(item => item.Category == "点卡" &&
+                      item.Time.Year == now.Year)
+                .Sum(item => item.ItemProfit);
+
+            decimal otherProfit = _profitItems
+                .Where(item => item.Category != "点卡" &&
+                      item.Time.Year == now.Year)
+                .Sum(item => item.ItemProfit);
+
+            UpdateLabels(dkProfit, otherProfit, "jn");
+        }
+
+        // 统计全部
+        private void TJ()
+        {
+            decimal dkProfit = _profitItems
+                .Where(item => item.Category == "点卡")
+                .Sum(item => item.ItemProfit);
+
+            decimal otherProfit = _profitItems
+                .Where(item => item.Category != "点卡")
+                .Sum(item => item.ItemProfit);
+
+            UpdateLabels(dkProfit, otherProfit, "z");
+        }
+
+        // 公共标签更新方法
+        private void UpdateLabels(decimal dkProfit, decimal otherProfit, string prefix)
+        {
+            decimal dkPrice = decimal.Parse(txtdk.Text);
+            int personCount = int.Parse(txtjs.Text);
+
+            var dktotal = Math.Abs(dkProfit);
+            var dkxs = dktotal / (6 * dkPrice * personCount);
+
+            // 动态获取控件
+            Control[] controls = this.Controls.Find($"lbl{prefix}zx", true);
+            if (controls.Length > 0 && controls[0] is System.Windows.Forms.Label lblZX)
+                lblZX.Text = $"{dkxs:N0} 小时";
+
+            controls = this.Controls.Find($"lbl{prefix}dk", true);
+            if (controls.Length > 0 && controls[0] is System.Windows.Forms.Label lblDK)
+                lblDK.Text = $"{dktotal:N0} W / {dktotal / (dkPrice * 10):N0}￥";
+
+            controls = this.Controls.Find($"lbl{prefix}sy", true);
+            if (controls.Length > 0 && controls[0] is System.Windows.Forms.Label lblSY)
+                lblSY.Text = $"{otherProfit:N0} W / {otherProfit / (dkPrice * 10):N0}￥";
+
+            controls = this.Controls.Find($"lbl{prefix}lr", true);
+            if (controls.Length > 0 && controls[0] is System.Windows.Forms.Label lblLR)
+                lblLR.Text = $"{(otherProfit - dktotal):N0} W / {(otherProfit - dktotal) / (dkPrice * 10):N0}￥";
+        }
         private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (dataGridView1.Columns[e.ColumnIndex].Name == "Time")
@@ -369,7 +516,6 @@ namespace mhcj
                 // 刷新界面
                 dataGridView1.DataSource = null;
                 dataGridView1.DataSource = _profitItems;
-                label4.Text = $"收 益：0W";
                 button1_Click(null, null);
 
                 MessageBox.Show("数据已清空！");
@@ -492,6 +638,11 @@ namespace mhcj
             _isTextChanged = true;
             _saveTimer.Stop();
             _saveTimer.Start();
+        }
+
+        private void label23_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -1,0 +1,191 @@
+[
+  {
+    "Category": "持国",
+    "Price": 960.0,
+    "Quantity": 1,
+    "Time": "2025-04-01T16:20:25.0813393+08:00",
+    "ItemProfit": 960.0
+  },
+  {
+    "Category": "眼镜妹",
+    "Price": 960.0,
+    "Quantity": 1,
+    "Time": "2025-04-01T16:20:24.6394193+08:00",
+    "ItemProfit": 960.0
+  },
+  {
+    "Category": "广目",
+    "Price": 1600.0,
+    "Quantity": 1,
+    "Time": "2025-04-01T16:20:23.3353227+08:00",
+    "ItemProfit": 1600.0
+  },
+  {
+    "Category": "广目",
+    "Price": 1600.0,
+    "Quantity": 1,
+    "Time": "2025-04-01T16:20:21.777789+08:00",
+    "ItemProfit": 1600.0
+  },
+  {
+    "Category": "龙龟",
+    "Price": 960.0,
+    "Quantity": 1,
+    "Time": "2025-04-01T16:20:21.3739563+08:00",
+    "ItemProfit": 960.0
+  },
+  {
+    "Category": "多闻",
+    "Price": 960.0,
+    "Quantity": 1,
+    "Time": "2025-04-01T16:20:20.6346256+08:00",
+    "ItemProfit": 960.0
+  },
+  {
+    "Category": "天狗",
+    "Price": 800.0,
+    "Quantity": 1,
+    "Time": "2025-04-01T16:20:19.9892585+08:00",
+    "ItemProfit": 800.0
+  },
+  {
+    "Category": "5J童子",
+    "Price": 600.0,
+    "Quantity": 1,
+    "Time": "2025-04-01T16:20:19.5601919+08:00",
+    "ItemProfit": 600.0
+  },
+  {
+    "Category": "4J童子",
+    "Price": 200.0,
+    "Quantity": 1,
+    "Time": "2025-04-01T16:20:18.9311041+08:00",
+    "ItemProfit": 200.0
+  },
+  {
+    "Category": "天女",
+    "Price": 100.0,
+    "Quantity": 1,
+    "Time": "2025-04-01T16:20:18.3708054+08:00",
+    "ItemProfit": 100.0
+  },
+  {
+    "Category": "变异",
+    "Price": 180.0,
+    "Quantity": 1,
+    "Time": "2025-04-01T16:20:17.7407251+08:00",
+    "ItemProfit": 180.0
+  },
+  {
+    "Category": "80环【武】",
+    "Price": 62.0,
+    "Quantity": 1,
+    "Time": "2025-04-01T16:20:15.7023786+08:00",
+    "ItemProfit": 62.0
+  },
+  {
+    "Category": "60环【装】",
+    "Price": 20.0,
+    "Quantity": 1,
+    "Time": "2025-04-01T16:20:14.9557035+08:00",
+    "ItemProfit": 20.0
+  },
+  {
+    "Category": "70环【武】",
+    "Price": 12.5,
+    "Quantity": 1,
+    "Time": "2025-04-01T16:20:14.4100516+08:00",
+    "ItemProfit": 12.5
+  },
+  {
+    "Category": "80环【装】",
+    "Price": 50.0,
+    "Quantity": 1,
+    "Time": "2025-04-01T16:20:13.6190458+08:00",
+    "ItemProfit": 50.0
+  },
+  {
+    "Category": "70环【装】",
+    "Price": 9.5,
+    "Quantity": 1,
+    "Time": "2025-04-01T16:20:13.0682966+08:00",
+    "ItemProfit": 9.5
+  },
+  {
+    "Category": "60环【武】",
+    "Price": 23.0,
+    "Quantity": 1,
+    "Time": "2025-04-01T16:20:10.9246062+08:00",
+    "ItemProfit": 23.0
+  },
+  {
+    "Category": "点卡",
+    "Price": 1.55,
+    "Quantity": 50,
+    "Time": "2025-04-01T16:12:00.4734139+08:00",
+    "ItemProfit": -77.50
+  },
+  {
+    "Category": "点卡",
+    "Price": 1.55,
+    "Quantity": 50,
+    "Time": "2025-04-01T16:11:59.1638788+08:00",
+    "ItemProfit": -77.50
+  },
+  {
+    "Category": "点卡",
+    "Price": 5.0,
+    "Quantity": 1,
+    "Time": "2025-04-01T16:11:57.8503634+08:00",
+    "ItemProfit": -5.0
+  },
+  {
+    "Category": "广目",
+    "Price": 1600.0,
+    "Quantity": 1,
+    "Time": "2025-04-01T16:03:18.9062741+08:00",
+    "ItemProfit": 1600.0
+  },
+  {
+    "Category": "广目",
+    "Price": 1600.0,
+    "Quantity": 1,
+    "Time": "2025-04-01T16:03:16.3804897+08:00",
+    "ItemProfit": 1600.0
+  },
+  {
+    "Category": "广目",
+    "Price": 1600.0,
+    "Quantity": 1,
+    "Time": "2025-03-28T17:25:30.8427546+08:00",
+    "ItemProfit": 1600.0
+  },
+  {
+    "Category": "广目",
+    "Price": 1600.0,
+    "Quantity": 1,
+    "Time": "2025-03-28T17:25:28.8179113+08:00",
+    "ItemProfit": 1600.0
+  },
+  {
+    "Category": "广目",
+    "Price": 1600.0,
+    "Quantity": 1,
+    "Time": "2025-03-28T17:25:27.2765234+08:00",
+    "ItemProfit": 1600.0
+  },
+  {
+    "Category": "广目",
+    "Price": 1600.0,
+    "Quantity": 1,
+    "Time": "2025-03-28T17:25:25.8368089+08:00",
+    "ItemProfit": 1600.0
+  },
+  {
+    "Category": "眼镜妹",
+    "Price": 960.0,
+    "Quantity": 1,
+    "Time": "2025-03-28T16:44:50.1045203+08:00",
+    "ItemProfit": 960.0
+  }
+]
