@@ -19,5 +19,7 @@ namespace mhcj
         public DateTime Time { get; set; } = DateTime.Now;
         [DisplayName("收益")]
         public decimal ItemProfit =>Category=="点卡"? -Price* Quantity: Price * Quantity;
+        [DisplayName("角色数量")]
+        public int JSQuantity { get; set; }
     }
 }

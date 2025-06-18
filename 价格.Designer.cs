@@ -34,6 +34,7 @@
             this.btnAddCategory = new System.Windows.Forms.Button();
             this.txtNewCategory = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPrices)).BeginInit();
             this.SuspendLayout();
             // 
@@ -63,7 +64,7 @@
             // 
             // btnAddCategory
             // 
-            this.btnAddCategory.Location = new System.Drawing.Point(226, 10);
+            this.btnAddCategory.Location = new System.Drawing.Point(416, 10);
             this.btnAddCategory.Name = "btnAddCategory";
             this.btnAddCategory.Size = new System.Drawing.Size(75, 23);
             this.btnAddCategory.TabIndex = 5;
@@ -73,7 +74,7 @@
             // 
             // txtNewCategory
             // 
-            this.txtNewCategory.Location = new System.Drawing.Point(109, 12);
+            this.txtNewCategory.Location = new System.Drawing.Point(299, 12);
             this.txtNewCategory.Name = "txtNewCategory";
             this.txtNewCategory.Size = new System.Drawing.Size(100, 21);
             this.txtNewCategory.TabIndex = 6;
@@ -81,17 +82,26 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(38, 16);
+            this.label1.Location = new System.Drawing.Point(228, 16);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(65, 12);
             this.label1.TabIndex = 7;
             this.label1.Text = "类别名称：";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(40, 12);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 20);
+            this.comboBox1.TabIndex = 8;
             // 
             // 价格
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(614, 723);
+            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtNewCategory);
             this.Controls.Add(this.btnAddCategory);
@@ -113,5 +123,6 @@
         private System.Windows.Forms.Button btnAddCategory;
         private System.Windows.Forms.TextBox txtNewCategory;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }

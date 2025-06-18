@@ -1,64 +1,46 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿// DataManager.cs
+using mhcj;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
+using System.Windows.Forms;
 
-namespace mhcj
+public static class DataManager
 {
-    public static class DataManager
+    public static List<ProfitItem> LoadData(string serverId)
     {
-        private static readonly string DataPath =
-            Path.Combine(Environment.CurrentDirectory, "profit_data.json");
-        // 添加清空数据方法
-        public static void ClearData()
+        string filePath = GetDataFilePath(serverId);
+        if (File.Exists(filePath))
         {
-            try
-            {
-                if (File.Exists(DataPath))
-                {
-                    File.Delete(DataPath);
-                    Console.WriteLine("数据文件已删除！");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"清空失败：{ex.Message}");
-            }
+            var json = File.ReadAllText(filePath);
+            return JsonConvert.DeserializeObject<List<ProfitItem>>(json) ?? new List<ProfitItem>();
         }
-        // 保存数据
-        public static void SaveData(List<ProfitItem> data)
-        {
-            try
-            {
-                string json = JsonConvert.SerializeObject(data, Formatting.Indented);
-                File.WriteAllText(DataPath, json);
-                Console.WriteLine("数据保存成功！");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"保存失败：{ex.Message}");
-            }
-        }
+        return new List<ProfitItem>();
+    }
 
-        // 加载数据
-        public static List<ProfitItem> LoadData()
+    public static void SaveData(List<ProfitItem> data, string serverId)
+    {
+        string filePath = GetDataFilePath(serverId);
+        var json = JsonConvert.SerializeObject(data, Formatting.Indented);
+        File.WriteAllText(filePath, json);
+    }
+
+    public static void ClearData(string serverId)
+    {
+        string filePath = GetDataFilePath(serverId);
+        if (File.Exists(filePath))
         {
-            try
-            {
-                if (File.Exists(DataPath))
-                {
-                    string json = File.ReadAllText(DataPath);
-                    return JsonConvert.DeserializeObject<List<ProfitItem>>(json).OrderByDescending(a=>a.Time).ToList();
-                }
-                return new List<ProfitItem>();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"加载失败：{ex.Message}");
-                return new List<ProfitItem>();
-            }
+            File.Delete(filePath);
         }
+    }
+
+    private static string GetDataFilePath(string serverId)
+    {
+        string directory = Path.Combine(Application.StartupPath, "Data");
+        if (!Directory.Exists(directory))
+        {
+            Directory.CreateDirectory(directory);
+        }
+        return Path.Combine(directory, $"{serverId}_data.json");
     }
 }

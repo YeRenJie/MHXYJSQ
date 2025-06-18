@@ -18,3 +18,4 @@ D:\工作目录\mhcj\obj\Release\梦幻场景计算器.application
 D:\工作目录\mhcj\obj\Release\mhcj.csproj.Up2Date
 D:\工作目录\mhcj\obj\Release\梦幻场景计算器.exe
 D:\工作目录\mhcj\obj\Release\梦幻场景计算器.pdb
+D:\工作目录\mhcj\bin\Release\qu_list.json

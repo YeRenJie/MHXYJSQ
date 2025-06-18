@@ -1,8 +1,15 @@
 [
-
+  {
+    "Category": "点卡",
+    "Price": 1.5
+  },
+  {
+    "Category": "谛听",
+    "Price": 1050
+  },
   {
     "Category": "广目",
-    "Price": 1600
+    "Price": 1800
   },
   {
     "Category": "持国",
@@ -30,7 +37,7 @@
   },
   {
     "Category": "4J童子",
-    "Price": 200
+    "Price": 130
   },
   {
     "Category": "天女",

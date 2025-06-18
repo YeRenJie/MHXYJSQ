@@ -2,9 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 using System.Xml;
 
 namespace mhcj
@@ -13,51 +15,141 @@ namespace mhcj
     {
         private static readonly string ConfigPath =
             Path.Combine(Environment.CurrentDirectory, "price_list.json");
-
-        // 加载价格列表
-        public static BindingList<PriceItem> LoadPrices()
+        // 加载服务器列表
+        public static BindingList<selectqu> LoadService()
         {
             try
             {
-                if (File.Exists(ConfigPath))
+                string quPath =
+           Path.Combine(Environment.CurrentDirectory, "qu_list.json");
+                if (File.Exists(quPath))
                 {
-                    string json = File.ReadAllText(ConfigPath);
-                    return JsonConvert.DeserializeObject<BindingList<PriceItem>>(json);
+                    string json = File.ReadAllText(quPath);
+                    return JsonConvert.DeserializeObject<BindingList<selectqu>>(json);
                 }
-                return CreateDefaultList();
+
+                var defaultList = new BindingList<selectqu>
+        {
+            new selectqu(){dk=1.42M,js=5, name="默认区"},
+        };
+                string json1 = JsonConvert.SerializeObject(defaultList, Newtonsoft.Json.Formatting.Indented);
+                File.WriteAllText(quPath, json1);
+                Console.WriteLine("保存成功！");
+                return defaultList;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"加载失败: {ex.Message}");
-                return CreateDefaultList();
+                MessageBox.Show($"加载失败: {ex.Message}");
+                return null;
             }
         }
 
-        // 保存价格列表
-        public static void SavePrices(BindingList<PriceItem> prices)
+        public static List<PriceItem> LoadPrices(string serverId)
         {
-            try
+            string filePath = GetPriceFilePath(serverId);
+            if (File.Exists(filePath))
             {
-                string json = JsonConvert.SerializeObject(prices, Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText(ConfigPath, json);
-                Console.WriteLine("保存成功！");
+                var json = File.ReadAllText(filePath);
+                return JsonConvert.DeserializeObject<List<PriceItem>>(json) ?? new List<PriceItem>();
             }
-            catch (Exception ex)
+            //  CreateDefaultList();
+            return CreateDefaultList(serverId).ToList();
+        }
+
+        public static void SavePrices(List<PriceItem> prices, string serverId)
+        {
+            string filePath = GetPriceFilePath(serverId);
+            var json = JsonConvert.SerializeObject(prices, Newtonsoft.Json.Formatting.Indented);
+            File.WriteAllText(filePath, json);
+        }
+
+        private static string GetPriceFilePath(string serverId)
+        {
+            string directory = Path.Combine(Application.StartupPath, "Prices");
+            if (!Directory.Exists(directory))
             {
-                Console.WriteLine($"保存失败: {ex.Message}");
+                Directory.CreateDirectory(directory);
             }
+            return Path.Combine(directory, $"{serverId}_prices.json");
         }
 
         // 创建默认列表
-        private static BindingList<PriceItem> CreateDefaultList()
+        private static BindingList<PriceItem> CreateDefaultList(string serverId)
         {
-            var defaultList = new BindingList<PriceItem>
-        {
-            new PriceItem("80环", 10000),
-            new PriceItem("70环", 8000),
-            new PriceItem("60环", 6000)
-        };
-            SavePrices(defaultList);
+            string json = @"[
+          {
+            ""Category"": ""谛听"",
+            ""Price"": 1050
+          },
+          {
+            ""Category"": ""广目"",
+            ""Price"": 1800
+          },
+          {
+            ""Category"": ""持国"",
+            ""Price"": 960
+          },
+          {
+            ""Category"": ""多闻"",
+            ""Price"": 960
+          },
+          {
+            ""Category"": ""龙龟"",
+            ""Price"": 960
+          },
+          {
+            ""Category"": ""眼镜妹"",
+            ""Price"": 960
+          },
+          {
+            ""Category"": ""天狗"",
+            ""Price"": 800
+          },
+          {
+            ""Category"": ""5J童子"",
+            ""Price"": 600
+          },
+          {
+            ""Category"": ""4J童子"",
+            ""Price"": 130
+          },
+          {
+            ""Category"": ""天女"",
+            ""Price"": 100
+          },
+          {
+            ""Category"": ""变异"",
+            ""Price"": 180
+          },
+          {
+            ""Category"": ""80环【武】"",
+            ""Price"": 62
+          },
+          {
+            ""Category"": ""80环【装】"",
+            ""Price"": 50
+          },
+          {
+            ""Category"": ""70环【武】"",
+            ""Price"": 12.5
+          },
+          {
+            ""Category"": ""70环【装】"",
+            ""Price"": 9.5
+          },
+          {
+            ""Category"": ""60环【武】"",
+            ""Price"": 23
+          },
+          {
+            ""Category"": ""60环【装】"",
+            ""Price"": 20
+          }
+        ]";
+            var defaultList = JsonConvert.DeserializeObject<BindingList<PriceItem>>(json);
+
+
+            SavePrices(defaultList.ToList(), serverId);
             return defaultList;
         }
     }

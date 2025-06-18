@@ -55,14 +55,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="梦幻场景计算器.exe" size="185768">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="梦幻场景计算器.exe" size="186280">
       <assemblyIdentity name="梦幻场景计算器" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>9Tr6M5cIy0rHeu2osvtVMEderTY=</dsig:DigestValue>
+        <dsig:DigestValue>1aBMBG0NJkuPp4l1ObOi0howgyo=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
