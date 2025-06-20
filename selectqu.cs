@@ -16,8 +16,6 @@ namespace mhcj
         public decimal dk { get; set; }
         [DisplayName("角色数")]
         public int js { get; set; }
-        [DisplayName("服务器")]
-        public string Server { get; set; }  // 新增服务器字段
 
     }
 }

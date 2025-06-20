@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 using static mhcj.Form1;
 
@@ -52,7 +53,10 @@ namespace mhcj
                     JSQuantity = int.Parse(server.RSText),
                     Time = DateTime.Now
                 });
-
+                //var scsj = server.ProfitItems.Where(a => a.Price >= 500).Max(i => i.Time);
+                ////距离上次时间多少小时
+                //var timeSpan = DateTime.Now - scsj;
+                //lblscchsj.Text = timeSpan.Hours.ToString() + " 小时";
                 // 保存数据
                 DataManager.SaveData(server.ProfitItems.ToList(), server.ServerId);
 
@@ -102,9 +106,9 @@ namespace mhcj
             // 加载默认服务器 (新增)
             LoadDefaultServer();
 
-            // 初始化定时器
-            timer1.Interval = 10 * 60 * 1000;
-            timer1.Tick += Timer1_Tick;
+            //// 初始化定时器
+            //timer1.Interval = 10 * 60 * 1000;
+            //timer1.Tick += Timer1_Tick;
         }
         private void button1_Click(object sender, EventArgs e)
         {
@@ -154,7 +158,6 @@ namespace mhcj
                         item.Quantity = (int)Math.Round(sjsl);
                     }
                 }
-
                 // 为每个服务器设置计时器事件
                 serverData.ServerTimer.Tick += (s, e) => ServerTimer_Tick(serverData);
 
@@ -169,6 +172,16 @@ namespace mhcj
             if (_serverDataDict.Count > 0)
             {
                 _currentServerId = _serverDataDict.Keys.First();
+                var currentServer = _serverDataDict[_currentServerId];
+                
+                lblfwq.Text= currentServer.ServerId;
+                txtdk.Text = currentServer.DKText;
+                txtjs.Text= currentServer.RSText;
+               //var scsj=  currentServer.ProfitItems.Where(a=>a.Price>=500).Max(i => i.Time);
+               // //距离上次时间多少小时
+               // var timeSpan = DateTime.Now - scsj;
+               // lblscchsj.Text = timeSpan.Hours.ToString()+" 小时";
+               // lblscchsj.Text = currentServer.ServerId;
                 SwitchServer(_currentServerId);
             }
         }
@@ -451,7 +464,10 @@ namespace mhcj
         {
             DateTime startTime, endTime;
             CalculateTimeRange(serverData, out startTime, out endTime);
-
+            var scsj = serverData.ProfitItems.Where(a => a.Price >= 500).Max(i => i.Time);
+            //距离上次时间多少小时
+            var timeSpan = DateTime.Now - scsj;
+            lblscchsj.Text = timeSpan.Hours.ToString() + " 小时";
             // 计算点卡消耗
             decimal monthProfit = serverData.ProfitItems
                 .Where(item => item.Category == "点卡" &&
@@ -506,6 +522,13 @@ namespace mhcj
             // 刷新数据网格
             dataGridView1.DataSource = null;
             dataGridView1.DataSource = serverData.ProfitItems;
+
+            // 确保有数据时选中第一行
+            if (dataGridView1.Rows.Count > 0)
+            {
+                //  dataGridView1.Rows[0].Selected = true;
+                dataGridView1.CurrentCell = dataGridView1.Rows[0].Cells[0]; // 选中第一个单元格
+            }
         }
 
         // 计算时间范围 (重构)
@@ -799,11 +822,27 @@ namespace mhcj
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-
+            var serviceList = PriceManager.LoadService();
             // 停止所有服务器的计时器
             foreach (var server in _serverDataDict.Values)
             {
+              var service=serviceList.FirstOrDefault(a => a.name == server.ServerId);
+                service.dk= decimal.Parse(server.DKText);
+                service.js= int.Parse(server.RSText);
                 server.StopTimer();
+            }
+            PriceManager.SaveService(serviceList);
+        }
+        int cs = 0;
+        private void button4_Click(object sender, EventArgs e)
+        {
+            cs++;
+            label8.Text = "+1";
+            if (cs>10)
+            {
+                cs = 0;
+                MessageBox.Show("小伙子，你有大帝之资。点了10次无敌了。");
+
             }
 
         }

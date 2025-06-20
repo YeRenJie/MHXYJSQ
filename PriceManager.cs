@@ -43,7 +43,24 @@ namespace mhcj
                 return null;
             }
         }
+        // 保存服务器列表
+        public static void SaveService(BindingList<selectqu> defaultList)
+        {
+            try
+            {
+                string quPath =
+           Path.Combine(Environment.CurrentDirectory, "qu_list.json");
+                string json = JsonConvert.SerializeObject(defaultList, Newtonsoft.Json.Formatting.Indented);
+                File.WriteAllText(quPath, json);
+                Console.WriteLine("保存成功！");
+             
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"保存失败: {ex.Message}");
 
+            }
+        }
         public static List<PriceItem> LoadPrices(string serverId)
         {
             string filePath = GetPriceFilePath(serverId);
